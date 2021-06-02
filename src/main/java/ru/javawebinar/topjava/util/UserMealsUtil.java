@@ -51,13 +51,12 @@ public class UserMealsUtil {
                         Collectors.summingInt(UserMeal::getCalories)));
 
 
-        List<UserMealWithExcess> list = meals.stream().
+        return meals.stream().
                 filter(userMeal -> TimeUtil.isBetweenHalfOpen(userMeal.getDateTime().toLocalTime(), startTime, endTime)).
                 collect(ArrayList::new,
                         (result, userMeal) -> result.add(new UserMealWithExcess(userMeal.getDateTime(),
                                 userMeal.getDescription(),
                                 userMeal.getCalories(), calories.get(userMeal.getDateTime().toLocalDate()) < caloriesPerDay)),
                         ArrayList::addAll);
-        return list;
     }
 }
