@@ -18,7 +18,6 @@
             <th>Description</th>
             <th>Calories</th>
         </tr>
-
         <c:set var="dateTimeFormatter" value="${dateTimeFormatter}"/>
         <c:forEach items="${meals}" var="meal">
             <c:set var="color" value="${meal.excess ? 'red' : 'green'}" />
