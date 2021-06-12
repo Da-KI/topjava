@@ -17,6 +17,7 @@
             <th>DATE</th>
             <th>Description</th>
             <th>Calories</th>
+            <th colspan=2>Action</th>
         </tr>
         <c:set var="dateTimeFormatter" value="${dateTimeFormatter}"/>
         <c:forEach items="${meals}" var="meal">
