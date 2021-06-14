@@ -1,11 +1,13 @@
 package ru.javawebinar.topjava.repository.inmemory;
 
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.util.Collection;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,11 +16,12 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.meals.forEach(this::save);
+        MealsUtil.meals.forEach(meal -> save(meal, 1));
     }
 
     @Override
-    public Meal save(Meal meal) {
+    public Meal save(Meal meal, Integer userId) {
+        if(!Objects.equals(meal.getUserId(), userId)) { return null; }
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
             repository.put(meal.getId(), meal);
@@ -29,18 +32,33 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, Integer userId) {
+        if(id != userId) { return false; }
         return repository.remove(id) != null;
     }
 
     @Override
-    public Meal get(int id) {
-        return repository.get(id);
+    public Meal get(int id, Integer userId) {
+        if(id != userId) { return null; }
+        return repository.getOrDefault(id, null);
     }
 
     @Override
-    public Collection<Meal> getAll() {
-        return repository.values();
+    public Collection<Meal> getAll(Integer userId) {
+        return getBetweenDates(LocalDate.MIN, LocalDate.MAX, userId);
+    }
+
+    @Override
+    public Collection<Meal> getBetweenDates(LocalDate startDate, LocalDate endDate, Integer userId) {
+        List<Meal> usersMealsBetweenDates = new ArrayList<>();
+        for (Meal meal: repository.values()) {
+            if (meal.getUserId().equals(userId) && DateTimeUtil.isBetweenHalfOpen(meal.getDate(), startDate, endDate)) {
+                usersMealsBetweenDates.add(meal);
+            }
+        }
+        usersMealsBetweenDates.sort(Collections.reverseOrder(Meal.COMPARE_BY_DATE));
+
+        return usersMealsBetweenDates;
     }
 }
 
