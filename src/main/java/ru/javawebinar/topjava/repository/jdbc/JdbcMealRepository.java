@@ -81,9 +81,7 @@ public class JdbcMealRepository implements MealRepository {
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         List<Meal> meals = getAll(userId);
-        for (Meal m: meals) {
-            if(!Util.isBetweenHalfOpen(m.getDateTime(), startDateTime, endDateTime)) meals.remove(m);
-        }
+        meals.removeIf(m -> !Util.isBetweenHalfOpen(m.getDateTime(), startDateTime, endDateTime));
         return meals;
     }
 }
