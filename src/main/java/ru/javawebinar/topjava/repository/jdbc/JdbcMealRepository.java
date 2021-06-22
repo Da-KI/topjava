@@ -75,9 +75,6 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-//        MapSqlParameterSource map = new MapSqlParameterSource()
-//                .addValue("userId", userId);
-//        return namedParameterJdbcTemplate.query("SELECT * FROM meals WHERE user_id=:userId ORDER BY date_time DESC", map, ROW_MAPPER);
         return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? ORDER BY date_time DESC", ROW_MAPPER, userId);
     }
 
