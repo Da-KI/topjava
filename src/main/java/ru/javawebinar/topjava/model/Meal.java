@@ -1,8 +1,5 @@
 package ru.javawebinar.topjava.model;
 
-import ru.javawebinar.topjava.web.SecurityUtil;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,8 +20,8 @@ public class Meal extends AbstractBaseEntity {
     }
 
     public Meal(Integer id, Integer userId, LocalDateTime dateTime, String description, int calories) {
-        this.id = id;
-        this.userId = id;
+        super.id = id;
+        this.userId = userId;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
@@ -54,10 +51,6 @@ public class Meal extends AbstractBaseEntity {
         return dateTime.toLocalTime();
     }
 
-    public boolean isNew() {
-        return id == null;
-    }
-
     @Override
     public String toString() {
         return "Meal{" +
@@ -69,9 +62,9 @@ public class Meal extends AbstractBaseEntity {
     }
 
     public static final Comparator<Meal> COMPARE_BY_DATE = (o1, o2) -> {
-        if (o1.getDateTime().isEqual(o2.getDateTime())) { return 0; }
-        else if (o1.getDateTime().isAfter(o2.getDateTime())) { return 1; }
-        else { return -1; }
+        if (o1.getDateTime().isEqual(o2.getDateTime())) return 0;
+        else if (o1.getDateTime().isAfter(o2.getDateTime())) return 1;
+        else return -1;
     };
 
 }
