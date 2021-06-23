@@ -12,8 +12,7 @@ public class Meal extends AbstractBaseEntity {
 
     private int calories = 1000;
 
-    public Meal() {
-    }
+    public Meal() {}
 
     public Meal(Meal m) {
         this(m.getId(), m.getDateTime(), m.getDescription(), m.getCalories());
@@ -61,7 +60,6 @@ public class Meal extends AbstractBaseEntity {
     public LocalTime getTime() {
         return dateTime.toLocalTime();
     }
-
 
     @Override
     public String toString() {
