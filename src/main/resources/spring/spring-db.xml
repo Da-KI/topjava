@@ -125,6 +125,7 @@
     <beans profile="datajpa">
         <context:component-scan base-package="ru.javawebinar.**.repository.datajpa"/>
         <jpa:repositories base-package="ru.javawebinar.**.repository.datajpa"/>
+
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource"
               p:packagesToScan="ru.javawebinar.**.model">
@@ -142,6 +143,7 @@
                       p:showSql="${jpa.showSql}">
                 </bean>
             </property>
+            <tx:annotation-driven/>
         </bean>
     </beans>
 </beans>
