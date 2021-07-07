@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public abstract class ServiceTest {
     protected static final Logger log = getLogger("result");
     protected static final StringBuilder results = new StringBuilder();

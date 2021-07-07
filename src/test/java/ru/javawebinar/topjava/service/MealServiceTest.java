@@ -29,8 +29,8 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-public class MealServiceTest extends ServiceTest {
+//@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
+public abstract class MealServiceTest extends ServiceTest {
 
     @Autowired
     private MealService service;
