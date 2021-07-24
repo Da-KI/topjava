@@ -19,8 +19,7 @@
     <h3><a href="index.jsp"><spring:message code="app.home"/></a></h3>
     <hr/>
     <h2>Meals</h2>
-    <form method="get" action="meals">
-        <input type="hidden" name="action" value="filter">
+    <form method="get" action="meals/filter">
         <dl>
             <dt>From Date (inclusive):</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>

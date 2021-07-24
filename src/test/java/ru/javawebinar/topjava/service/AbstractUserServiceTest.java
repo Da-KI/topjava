@@ -6,21 +6,26 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.repository.JpaUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import ru.javawebinar.topjava.repository.JpaUtil;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.UserTestData.*;
 
+@Component
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
@@ -31,6 +36,18 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired(required = false)
     protected JpaUtil jpaUtil;
+
+    @Autowired
+    private static Environment environment;
+
+    @BeforeClass
+    public static void checkJdbc() {
+        Assume.assumeFalse(isJdbc());
+    }
+
+    private static boolean isJdbc() {
+        return Arrays.toString(environment.getActiveProfiles()).toLowerCase().contains(Profiles.JDBC);
+    }
 
     @Before
     public void setup() {
