@@ -1,5 +1,9 @@
 package ru.javawebinar.topjava.to;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 
 public class MealTo {
@@ -11,9 +15,11 @@ public class MealTo {
 
     private final int calories;
 
+    @JsonIgnore
     private final boolean excess;
 
-    public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
+    @JsonCreator
+    public MealTo(@JsonProperty Integer id, @JsonProperty LocalDateTime dateTime, @JsonProperty String description, @JsonProperty int calories, boolean excess) {
         this.id = id;
         this.dateTime = dateTime;
         this.description = description;
