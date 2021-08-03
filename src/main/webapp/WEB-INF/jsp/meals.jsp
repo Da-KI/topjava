@@ -13,7 +13,7 @@
 <div class="jumbotron pt-4">
     <div class="container">
         <h3 class="text-center"><spring:message code="meal.title"/></h3>
-        <button class="btn btn-primary" onclick="add()">
+        <button class="btn btn-primary" onclick="filter()">
             <span class="fa fa-plus"></span>
             <spring:message code="meal.filter"/>
         </button>
