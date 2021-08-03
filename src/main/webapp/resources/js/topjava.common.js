@@ -78,3 +78,7 @@ function failNoty(jqXHR) {
     });
     failedNote.show()
 }
+
+function filter() {
+
+}
