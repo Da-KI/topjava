@@ -12,6 +12,7 @@ import ru.javawebinar.topjava.to.MealTo;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -46,15 +47,12 @@ public class MealUIController extends AbstractMealController {
         super.update(meal, id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal) {
-        Meal created = super.create(meal);
-
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
+    @PostMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void createWithLocation(@RequestParam LocalDateTime dateTime,
+                                   @RequestParam String description,
+                                   @RequestParam int calories) {
+        super.create(new Meal(dateTime, description, calories));
     }
 
     @GetMapping("/filter")
