@@ -31,7 +31,7 @@ $(function () {
                     "data": "dateTime",
                     "render": function (date, type, row) {
                         if (type === "display") {
-                            return date.replace("T", " ");
+                            return date.replace("T", " ").substring(0, 15);
                         }
                         return date;
                     }
@@ -60,11 +60,7 @@ $(function () {
                 ]
             ],
             "createdRow": function (row, data, dataIndex) {
-                if (data.excess) {
-                    $(row).attr("data-mealExcess", true);
-                } else {
-                    $(row).attr("data-mealExcess", false);
-                }
+                $(row).attr("data-mealExcess", data.excess);
             }
         })
     );
